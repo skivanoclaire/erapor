@@ -292,22 +292,192 @@ Dalam implementasi sistem saat ini, semua user yang sudah login (kecuali Kepala 
 
 **Akses:** Menu **Semester**
 
-**Fungsi:** Mengelola tahun ajaran dan semester
+**Fungsi:** Mengelola tahun ajaran dan semester aktif untuk sistem penilaian
 
-**Data yang Dikelola:**
-- Tahun Ajaran (contoh: 2024/2025)
-- Semester (1 = Ganjil, 2 = Genap)
-- Status Aktif
+#### 📋 Data yang Dikelola
 
-**Cara Menambah Semester Baru:**
-1. Klik menu **Semester**
-2. Isi form:
-   - Tahun Ajaran: `2024/2025`
-   - Semester: `1` (Ganjil) atau `2` (Genap)
-3. Klik **Simpan**
-4. Klik **Aktifkan** untuk mengaktifkan semester
+- **Tahun Ajaran:** Format string, contoh: `2024/2025`, `2025/2026`
+- **Semester:** Pilihan antara `ganjil` (Semester 1) atau `genap` (Semester 2)
+- **Status:**
+  - `berjalan` - Semester yang sedang aktif
+  - `tidak_berjalan` - Semester yang non-aktif
+- **Sekolah:** Relasi ke sekolah (multi-sekolah support)
 
-⚠️ **PENTING:** Hanya 1 semester yang bisa aktif dalam satu waktu!
+#### ⚙️ Karakteristik Sistem
+
+**Single Active Semester (Singleton Pattern):**
+- ✅ Hanya 1 semester yang boleh berstatus `berjalan` dalam satu waktu per sekolah
+- ✅ Saat mengaktifkan semester baru, semester lama otomatis di-nonaktifkan
+- ✅ Menggunakan database transaction untuk menjaga konsistensi data
+- ✅ Mencegah konflik data penilaian antar semester
+
+**Relasi dengan Modul Lain:**
+
+Semester aktif digunakan oleh:
+1. **Mapel Kelas** - Assignment mata pelajaran ke kelas per semester
+2. **Penilaian** - Semua nilai tersimpan per semester
+3. **P5 Projects** - Projek P5 dibuat per semester
+4. **Rapor** - Generate rapor berdasarkan semester
+5. **Kehadiran** - Data kehadiran per semester
+6. **Kenaikan Kelas** - Keputusan naik/tidak naik per semester
+
+#### 📝 Cara Menambah Semester Baru
+
+1. **Login sebagai Kepala Sekolah atau Operator**
+2. **Klik menu Semester** di navbar
+3. **Klik tombol "+ Tambah Semester Baru"**
+4. **Isi form dengan lengkap:**
+   ```
+   Sekolah: [Pilih dari dropdown]
+   Tahun Ajaran: 2024/2025
+   Semester: ganjil
+   Status: berjalan
+   ```
+5. **Klik "Simpan"**
+6. **Sistem akan:**
+   - Validasi data input
+   - Jika status = `berjalan`, otomatis nonaktifkan semester lain
+   - Simpan semester baru
+   - Tampilkan notifikasi sukses
+
+#### 🔄 Cara Mengaktifkan Semester
+
+**Skenario:** Anda ingin mengaktifkan semester yang sudah ada (misalnya kembali ke semester lalu untuk input nilai)
+
+1. **Buka menu Semester**
+2. **Lihat daftar semester:**
+   - Semester aktif ditandai badge hijau `berjalan`
+   - Semester non-aktif ditandai badge abu-abu `tidak_berjalan`
+3. **Klik tombol hijau "Aktifkan"** di baris semester yang diinginkan
+4. **Sistem akan otomatis:**
+   - Nonaktifkan semester yang sebelumnya aktif
+   - Aktifkan semester yang dipilih
+   - Refresh halaman dengan notifikasi sukses
+
+⚠️ **PENTING:** Proses aktivasi menggunakan transaction, jadi data dijamin konsisten!
+
+#### ✏️ Cara Edit Semester
+
+1. **Klik tombol "Edit"** pada baris semester
+2. **Form edit muncul** dengan data yang sudah terisi
+3. **Ubah data yang diperlukan:**
+   - Tahun Ajaran
+   - Semester (ganjil/genap)
+   - Status (berjalan/tidak_berjalan)
+4. **Klik "Simpan"**
+
+⚠️ **PERHATIAN:**
+- Sebaiknya tidak mengubah tahun ajaran/semester jika sudah ada data penilaian
+- Hati-hati saat mengubah status menjadi `berjalan` - semester lain tidak akan otomatis di-nonaktifkan lewat edit
+
+#### 🔍 Validasi & Aturan Bisnis
+
+**Validasi Input:**
+```
+✓ Sekolah: Wajib diisi, harus ada di database
+✓ Tahun Ajaran: Wajib, maksimal 20 karakter
+✓ Semester: Wajib, hanya 'ganjil' atau 'genap'
+✓ Status: Wajib, hanya 'berjalan' atau 'tidak_berjalan'
+```
+
+**Aturan Bisnis:**
+1. **One Active Semester Rule:** Satu sekolah hanya boleh punya 1 semester aktif
+2. **Auto-Deactivation:** Saat buat semester baru dengan status `berjalan`, semester lain otomatis non-aktif
+3. **Transaction Safety:** Aktivasi semester menggunakan DB transaction untuk atomicity
+
+#### 💡 Best Practices
+
+**✅ DO (Lakukan):**
+- Setup semester baru di awal tahun ajaran
+- Pastikan data master (kelas, siswa, mapel) sudah lengkap sebelum aktifkan semester
+- Lengkapi semua penilaian semester sebelumnya sebelum pindah semester baru
+- Gunakan format konsisten untuk tahun ajaran (contoh: 2024/2025)
+
+**❌ DON'T (Jangan):**
+- Jangan hapus semester yang sudah ada data penilaian (fitur hapus memang tidak tersedia)
+- Jangan edit tahun ajaran/semester setelah ada data penilaian
+- Jangan coba mengaktifkan 2 semester sekaligus (sistem akan mencegah)
+- Jangan lupa mengaktifkan semester setelah membuatnya
+
+#### 🎯 Use Case Scenarios
+
+**Scenario 1: Awal Tahun Ajaran Baru**
+```
+1. Semester lama: 2023/2024 Genap (status: berjalan)
+2. Admin buat semester baru: 2024/2025 Ganjil (status: berjalan)
+3. Sistem otomatis nonaktifkan 2023/2024 Genap
+4. Sekarang 2024/2025 Ganjil yang aktif
+5. Semua mapel kelas baru akan menggunakan semester ini
+```
+
+**Scenario 2: Input Nilai Semester Lalu**
+```
+1. Semester aktif: 2024/2025 Genap
+2. Guru lupa input nilai semester ganjil
+3. Admin klik "Aktifkan" di 2024/2025 Ganjil
+4. Guru input nilai yang tertinggal
+5. Admin klik "Aktifkan" kembali di 2024/2025 Genap
+6. Sistem kembali normal
+```
+
+**Scenario 3: Generate Rapor Semester Tertentu**
+```
+1. Admin bisa generate rapor semester manapun
+2. Tidak perlu mengaktifkan semester tersebut
+3. Pilih semester langsung saat generate rapor
+4. Buku Induk otomatis ambil data semua semester (fixed 6 semester)
+```
+
+#### ❓ FAQ Semester
+
+**Q: Kenapa hanya boleh 1 semester aktif?**
+**A:** Untuk mencegah konflik data. Bayangkan jika 2 semester aktif, saat guru input nilai, sistem bingung nilai masuk ke semester yang mana. Single active semester memastikan konsistensi.
+
+**Q: Bagaimana jika saya hapus semester aktif?**
+**A:** Fitur hapus semester tidak tersedia untuk menjaga integritas data. Jika benar-benar perlu, hubungi developer untuk manual deletion via database.
+
+**Q: Apakah bisa punya 2 sekolah dengan semester aktif berbeda?**
+**A:** Ya! Aturan "1 semester aktif" berlaku PER SEKOLAH. Sekolah A bisa aktif di semester ganjil, sementara Sekolah B aktif di semester genap.
+
+**Q: Data semester lama hilang saat ganti semester?**
+**A:** TIDAK! Data tidak hilang. Hanya status yang berubah dari `berjalan` ke `tidak_berjalan`. Semua data penilaian, nilai akhir, dll tetap tersimpan dan bisa diakses kapan saja.
+
+**Q: Buku Induk kok tampil semester yang belum ada datanya?**
+**A:** Buku Induk dirancang menampilkan 7 halaman fixed (6 semester kelas 10-12 + 1 rekapitulasi). Jika semester belum ada data, akan tampil halaman kosong. Ini normal untuk menjaga format konsisten.
+
+#### 🗄️ Technical Details
+
+**Database Schema:**
+```sql
+CREATE TABLE semesters (
+    id BIGINT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+    school_id BIGINT UNSIGNED NOT NULL,
+    tahun_ajaran VARCHAR(20) NOT NULL,
+    semester ENUM('ganjil', 'genap') NOT NULL,
+    status ENUM('berjalan', 'tidak_berjalan') DEFAULT 'tidak_berjalan',
+    created_at TIMESTAMP NULL,
+    updated_at TIMESTAMP NULL,
+
+    FOREIGN KEY (school_id) REFERENCES schools(id) ON DELETE CASCADE
+);
+```
+
+**Controller Logic (Aktivasi):**
+```php
+public function activate(Semester $semester)
+{
+    DB::transaction(function () use ($semester) {
+        // Nonaktifkan semua semester di sekolah yang sama
+        Semester::where('school_id', $semester->school_id)
+                ->update(['status' => 'tidak_berjalan']);
+
+        // Aktifkan semester yang dipilih
+        $semester->update(['status' => 'berjalan']);
+    });
+
+    return back()->with('ok', 'Semester diaktifkan.');
+}
+```
 
 ### 5.3 Management Users
 

@@ -1,951 +1,649 @@
-# MANUAL PENGGUNA E-RAPOR
-## Sistem Manajemen Rapor Digital SMK Muhammadiyah Plus Tanjung Selor
+# 📚 E-Rapor SMK Muhammadiyah Plus Tanjung Selor
+
+> Sistem Manajemen Rapor Digital berbasis Laravel dengan implementasi Kurikulum Merdeka yang lengkap dan komprehensif
+
+![Laravel](https://img.shields.io/badge/Laravel-12.27.1-FF2D20?style=for-the-badge&logo=laravel&logoColor=white)
+![PHP](https://img.shields.io/badge/PHP-8.2.29-777BB4?style=for-the-badge&logo=php&logoColor=white)
+![MySQL](https://img.shields.io/badge/MySQL-8.0-4479A1?style=for-the-badge&logo=mysql&logoColor=white)
+![TailwindCSS](https://img.shields.io/badge/Tailwind-3.0-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white)
 
 ---
 
-**Versi:** 1.0
-**Tanggal:** Desember 2025
-**Developer:** PT Benuanta Technology Consultant
+## 📖 Tentang Proyek
+
+**E-Rapor** adalah sistem informasi manajemen rapor digital yang dikembangkan khusus untuk **SMK Muhammadiyah Plus Tanjung Selor**. Aplikasi ini dirancang untuk mendukung implementasi **Kurikulum Merdeka** secara menyeluruh dengan berbagai fitur modern dan user-friendly.
+
+### 🎯 Tujuan Pengembangan
+
+- ✅ Digitalisasi proses penilaian dan rapor sekolah
+- ✅ Implementasi Kurikulum Merdeka (P5, Capaian Pembelajaran)
+- ✅ Meningkatkan efisiensi dan akurasi penilaian
+- ✅ Mempermudah monitoring progress siswa
+- ✅ Generate rapor otomatis dalam format PDF
 
 ---
 
-## DAFTAR ISI
+## ✨ Fitur Utama
 
-1. [Pengenalan Aplikasi](#1-pengenalan-aplikasi)
-2. [Spesifikasi Sistem](#2-spesifikasi-sistem)
-3. [Cara Login](#3-cara-login)
-4. [Panduan Berdasarkan Role](#4-panduan-berdasarkan-role)
-5. [Modul Data Master](#5-modul-data-master)
-6. [Modul Penilaian](#6-modul-penilaian)
-7. [Modul P5 (Profil Pelajar Pancasila)](#7-modul-p5-profil-pelajar-pancasila)
-8. [Modul Ekstrakurikuler](#8-modul-ekstrakurikuler)
-9. [Modul PKL](#9-modul-pkl)
-10. [Generate Rapor](#10-generate-rapor)
-11. [FAQ & Troubleshooting](#11-faq--troubleshooting)
+### 🔐 1. **Multi-Role Access Control (RBAC)**
 
----
+Sistem akses berbasis peran dengan 2 level utama:
 
-## 1. PENGENALAN APLIKASI
+#### **Admin (Kepala Sekolah & Operator)**
+- 🏫 Full access ke semua modul
+- 👥 Management data master (Users, Kelas, Siswa, Mapel)
+- 📅 Management Semester
+- ⚙️ Konfigurasi sistem (Media, Tanggal Rapor)
 
-### 1.1 Tentang E-Rapor
+#### **Non-Admin (Guru, Wali Kelas, Pembina, Pembimbing PKL)**
+- 📝 Input & kelola penilaian
+- 📊 Management P5, Ekstrakurikuler, PKL
+- 👁️ View dan print rapor
+- 📈 Monitor progress penilaian
 
-E-Rapor adalah sistem manajemen rapor digital berbasis web yang dikembangkan khusus untuk SMK Muhammadiyah Plus Tanjung Selor. Aplikasi ini mengimplementasikan Kurikulum Merdeka dengan fitur lengkap untuk:
+### 📊 2. **Penilaian Komprehensif**
 
-- Manajemen data sekolah, guru, siswa, dan kelas
-- Penilaian berbasis Kurikulum Merdeka
-- Projek Penguatan Profil Pelajar Pancasila (P5)
-- Ekstrakurikuler dan PKL
-- Generate rapor otomatis (Semester, P5, Buku Induk)
+- **Teknik Asesmen Beragam:** Ulangan, Tugas, Praktik, Projek, UTS/UAS
+- **Perencanaan Asesmen:** Setup bobot dan jumlah penilaian per teknik
+- **Board Penilaian:** Input nilai cepat dalam format tabel interaktif
+- **Auto-Calculate:** Perhitungan nilai akhir otomatis berdasarkan bobot
+- **Capaian Kompetensi:** Deskripsi pencapaian per siswa per mata pelajaran
 
-### 1.2 Fitur Utama
+### 🎯 3. **Projek P5 (Profil Pelajar Pancasila)**
 
-✅ **Multi-role Access Control** - Akses berbeda untuk Kepala Sekolah, Operator, Guru, Pembina, dan Pembimbing PKL
-✅ **Penilaian Komprehensif** - Support berbagai teknik penilaian (ulangan, tugas, praktik, projek)
-✅ **Capaian Kompetensi** - Input deskripsi capaian per mata pelajaran
-✅ **P5 Projects** - Management projek penguatan profil pelajar dengan 6 dimensi
-✅ **Auto Calculate** - Perhitungan otomatis nilai akhir dari berbagai penilaian
-✅ **PDF Generation** - Generate rapor dalam format PDF siap cetak
+Implementasi lengkap P5 dengan **6 Dimensi Profil Pelajar:**
 
----
+1. 🤲 Beriman, Bertakwa Kepada Tuhan YME, dan Berakhlak Mulia
+2. 🌍 Berkebinekaan Global
+3. 🤝 Bergotong Royong
+4. 💪 Mandiri
+5. 🧠 Bernalar Kritis
+6. 💡 Kreatif
 
-## 2. SPESIFIKASI SISTEM
+**Fitur P5:**
+- Setup projek dengan tema
+- Kriteria penilaian per dimensi
+- Penilaian dengan skala: MB, SB, BSH, SAB
+- Perhitungan nilai dimensi otomatis
+- Catatan proses per siswa
 
-### 2.1 Kebutuhan Sistem
+### 🏆 4. **Ekstrakurikuler & PKL**
 
-**Server Requirements:**
-- PHP >= 8.2
-- MySQL/MariaDB
-- Apache/Nginx Web Server
-- Composer
+**Ekstrakurikuler:**
+- CRUD ekstrakurikuler dengan pembina
+- Management anggota
+- Penilaian: Sangat Baik, Baik, Cukup, Kurang
+- Deskripsi pencapaian
 
-**Browser Requirements:**
-- Google Chrome (Recommended)
-- Mozilla Firefox
-- Microsoft Edge
-- Safari
+**PKL (Praktik Kerja Lapangan):**
+- Management kelompok PKL
+- Tujuan pembelajaran PKL
+- Penilaian per tujuan pembelajaran
+- Pembimbing per kelompok
 
-### 2.2 Teknologi yang Digunakan
+### 📄 5. **Generate Rapor PDF**
 
-- **Framework:** Laravel 12.27.1
-- **CSS Framework:** Tailwind CSS
-- **JavaScript:** Alpine.js
-- **PDF Library:** SnappyPDF (wkhtmltopdf)
+**3 Jenis Rapor:**
 
----
+#### **a) Rapor Semester (2 Halaman)**
+- Halaman 1: Identitas siswa + nilai mata pelajaran + capaian kompetensi
+- Halaman 2: Ekstrakurikuler + kehadiran + catatan wali kelas + kenaikan kelas
 
-## 3. CARA LOGIN
+#### **b) Rapor P5 (2 Halaman per Projek)**
+- Halaman 1: Tema projek + tabel nilai 6 dimensi + legend
+- Halaman 2: Detail kriteria dengan checkmark + catatan proses + tanda tangan
 
-### 3.1 Akses Halaman Login
-
-1. Buka browser (Chrome/Firefox/Edge)
-2. Ketik URL: `http://localhost/erapor/public/login` atau sesuai domain yang diberikan
-3. Halaman login akan muncul
-
-### 3.2 Proses Login
-
-1. Masukkan **Username** yang telah diberikan
-2. Masukkan **Password**
-3. Klik tombol **"Masuk"**
-4. Sistem akan mengarahkan ke dashboard sesuai role Anda
-
-### 3.3 Default Credentials
-
-**Password Default untuk Semua User:** `SMK2025!@#`
-
-**Username yang Tersedia:**
-- `kepalasekolah` - Kepala Sekolah (Full Access)
-- `walikelasX` - Wali Kelas X
-- `walikelasXI` - Wali Kelas XI
-- `walikelasXII` - Wali Kelas XII
-
-⚠️ **PENTING:** Ganti password default setelah login pertama kali!
-
-### 3.4 Ketentuan Password Baru
-
-Saat menambah user baru, password harus memenuhi kriteria berikut:
-
-✅ **Minimal 8 karakter**
-✅ **Mengandung huruf besar (A-Z)**
-✅ **Mengandung huruf kecil (a-z)**
-✅ **Mengandung angka (0-9)**
-✅ **Mengandung simbol (!@#$%^&* dll)**
-
-Sistem akan menampilkan indikator kekuatan password:
-- 🔴 **Merah** = Password Lemah (tidak bisa disimpan)
-- 🟡 **Kuning** = Password Sedang (tidak bisa disimpan)
-- 🟢 **Hijau** = Password Kuat (bisa disimpan)
-
-Contoh password yang memenuhi syarat: `Smk2025!@#`
-
-### 3.5 Lupa Password
-
-Hubungi operator sekolah atau administrator sistem untuk reset password.
-
----
-
-## 4. PANDUAN BERDASARKAN ROLE
-
-### 4.1 Kepala Sekolah & Operator
-
-**Hak Akses:** FULL ACCESS ke semua fitur
-
-**Dashboard:** Redirect ke Profil Sekolah
-
-**Menu yang Dapat Diakses:**
-- ✅ Sekolah (Profil & Edit)
-- ✅ Semester (Management tahun ajaran)
-- ✅ Users (Guru & Staff)
-- ✅ Kelas
-- ✅ Siswa
-- ✅ Mata Pelajaran
-- ✅ Mapel Kelas (Assignment)
-- ✅ Penilaian (Semua modul)
-- ✅ P5BK, Ekstrakurikuler, PKL
-- ✅ Rapor (Generate & Print)
-
-**Tugas Utama:**
-1. Setup data master (sekolah, semester, users, kelas, siswa, mapel)
-2. Monitoring penilaian
-3. Generate rapor
-4. Cetak rapor untuk distribusi
-
-### 4.2 Guru / Guru Mapel / Wali Kelas
-
-**Hak Akses:** Akses penuh ke penilaian, P5, ekstrakurikuler, PKL, kokurikuler, dan rapor
-
-**Dashboard:** Redirect ke Mapel Kelas
-
-**Menu yang Dapat Diakses:**
-- ✅ Sekolah (View only)
-- ✅ Mapel Kelas (View & Input Nilai)
-- ✅ Penilaian (Input nilai untuk mapel yang diampu)
-  - ✅ Perencanaan Asesmen
-  - ✅ Input Nilai per Penilaian
-  - ✅ Board Penilaian (Tabel cepat)
-  - ✅ Nilai Akhir & Capaian Kompetensi
-  - ✅ Monitor Penilaian
-  - ✅ Daftar Legger
-- ✅ Aksi Kelas
-  - ✅ Kehadiran (Sakit, Izin, Alpha)
-  - ✅ Catatan Wali Kelas
-  - ✅ Kenaikan Kelas
-- ✅ P5BK (Full CRUD)
-  - ✅ Buat/Edit/Hapus Projek
-  - ✅ Kelola Anggota
-  - ✅ Setup Kriteria & Dimensi
-  - ✅ Input Penilaian P5
-- ✅ Ekstrakurikuler (Full CRUD)
-  - ✅ Buat/Edit/Hapus Ekskul
-  - ✅ Kelola Anggota
-  - ✅ Input Penilaian
-- ✅ PKL (Full CRUD)
-  - ✅ Kelola Kelompok
-  - ✅ Tujuan Pembelajaran
-  - ✅ Input Penilaian
-- ✅ Kokurikuler (Full CRUD)
-- ✅ Rapor (View & Print)
-  - ✅ Rapor Semester
-  - ✅ Rapor P5
-  - ✅ Buku Induk
-- ❌ Management data master (No Access)
-  - ❌ Edit Sekolah
-  - ❌ Semester
-  - ❌ Users
-  - ❌ Kelas
-  - ❌ Siswa
-  - ❌ Mata Pelajaran
-  - ❌ Teknik Asesmen
-  - ❌ Media/Tanggal Rapor
-
-**Tugas Utama:**
-1. Input nilai penilaian siswa untuk mapel yang diampu
-2. Input capaian kompetensi (deskripsi)
-3. Input nilai akhir
-4. Kelola P5 project dan penilaiannya
-5. Kelola ekstrakurikuler dan penilaiannya
-6. Kelola PKL dan penilaiannya
-7. Input kehadiran, catatan, dan kenaikan kelas
-8. View & print rapor siswa
-
-### 4.3 Pembina Ekstrakurikuler
-
-**Hak Akses:** Sama dengan Guru (akses penuh ke semua fitur operasional)
-
-**Menu yang Dapat Diakses:**
-- ✅ Semua menu yang dapat diakses Guru/Wali Kelas (lihat section 4.2)
-- ✅ Fokus utama: Ekstrakurikuler (CRUD, Anggota, Penilaian)
-
-**Tugas Utama:**
-1. Kelola data ekstrakurikuler
-2. Kelola anggota ekstrakurikuler
-3. Input penilaian ekstrakurikuler
-4. Dapat juga akses fitur lain (penilaian mapel, P5, PKL, rapor)
-
-### 4.4 Pembimbing PKL
-
-**Hak Akses:** Sama dengan Guru (akses penuh ke semua fitur operasional)
-
-**Menu yang Dapat Diakses:**
-- ✅ Semua menu yang dapat diakses Guru/Wali Kelas (lihat section 4.2)
-- ✅ Fokus utama: PKL (Groups, Members, Objectives, Penilaian)
-
-**Tugas Utama:**
-1. Kelola kelompok PKL
-2. Kelola tujuan pembelajaran PKL
-3. Input penilaian PKL
-4. Dapat juga akses fitur lain (penilaian mapel, P5, ekstrakurikuler, rapor)
-
-⚠️ **CATATAN PENTING TENTANG HAK AKSES:**
-
-Dalam implementasi sistem saat ini, semua user yang sudah login (kecuali Kepala Sekolah dan Operator) memiliki akses yang SAMA ke fitur-fitur operasional. Perbedaan role (guru, guru_mapel, pembina, pembimbing_pkl) lebih bersifat **label administratif** untuk identifikasi tugas utama mereka.
-
-**Yang HANYA bisa diakses Kepala Sekolah & Operator:**
-1. Edit Profil Sekolah
-2. Management Semester (Tambah/Edit/Aktifkan)
-3. Management Users (Tambah/Edit/Hapus)
-4. Management Kelas (Tambah/Edit/Hapus)
-5. Management Siswa (Tambah/Edit/Hapus)
-6. Management Mata Pelajaran (Tambah/Edit/Hapus)
-7. Management Mapel Kelas (Tambah/Edit/Hapus/Toggle)
-8. Enrollment Siswa ke Mapel (Tambah/Hapus)
-9. CRUD Teknik Asesmen
-10. Upload Media Rapor
-11. Setting Tanggal Rapor
-
-**Yang bisa diakses SEMUA user (termasuk Guru):**
-- View Profil Sekolah
-- Mapel Kelas (View list)
-- Semua fitur Penilaian (Assessment, Scores, Final Grades, Board)
-- Monitor Penilaian & Legger
-- P5BK (Full CRUD)
-- Ekstrakurikuler (Full CRUD)
-- PKL (Full CRUD)
-- Kokurikuler (Full CRUD)
-- Aksi Kelas (Kehadiran, Catatan, Kenaikan)
-- Generate & Print Rapor
-
----
-
-## 5. MODUL DATA MASTER
-
-### 5.1 Profil Sekolah
-
-**Akses:** Menu **Sekolah**
-
-**Fungsi:** Mengelola data profil sekolah
-
-**Data yang Dikelola:**
-- Nama Sekolah
-- NPSN
-- Jenjang (SMK)
-- Email & Website
-- Alamat Lengkap
-- Logo Sekolah
-
-**Cara Edit:**
-1. Klik menu **Sekolah**
-2. Klik tombol **Edit Profil**
-3. Ubah data yang diperlukan
-4. Klik **Simpan**
-
-### 5.2 Semester / Tahun Ajaran
-
-**Akses:** Menu **Semester**
-
-**Fungsi:** Mengelola tahun ajaran dan semester
-
-**Data yang Dikelola:**
-- Tahun Ajaran (contoh: 2024/2025)
-- Semester (1 = Ganjil, 2 = Genap)
-- Status Aktif
-
-**Cara Menambah Semester Baru:**
-1. Klik menu **Semester**
-2. Isi form:
-   - Tahun Ajaran: `2024/2025`
-   - Semester: `1` (Ganjil) atau `2` (Genap)
-3. Klik **Simpan**
-4. Klik **Aktifkan** untuk mengaktifkan semester
-
-⚠️ **PENTING:** Hanya 1 semester yang bisa aktif dalam satu waktu!
-
-### 5.3 Management Users
-
-**Akses:** Menu **Users**
-
-**Fungsi:** Mengelola akun guru dan staff
-
-**Data yang Dikelola:**
-- Username
-- Nama Lengkap
-- NIK & NIP
-- Jenis PTK (Role):
-  - `kepala_sekolah` - Kepala Sekolah
-  - `operator` - Operator
-  - `guru` - Guru Mata Pelajaran
-  - `guru_mapel` - Guru Mapel (sama dengan guru)
-  - `pembina` - Pembina Ekstrakurikuler
-  - `pembimbing_pkl` - Pembimbing PKL
-- Status Aktif
-
-**Cara Menambah User Baru:**
-1. Klik menu **Users**
-2. Klik tombol **Tambah User**
-3. Isi form:
-   - Sekolah: Pilih sekolah
-   - Username: `username_unik`
-   - Password: **WAJIB diisi** dengan password yang memenuhi syarat (minimal 8 karakter, huruf besar, huruf kecil, angka, dan simbol)
-   - Nama: Nama lengkap
-   - Jenis PTK: Pilih role
-   - Status: Aktif
-4. Perhatikan **indikator kekuatan password**:
-   - Pastikan password menunjukkan status **Kuat** (hijau)
-   - Checklist harus semua centang hijau
-   - Tombol Simpan akan ter-disable jika password lemah
-5. Klik **Simpan**
-
-⚠️ **PENTING:** Password wajib memenuhi kriteria kuat sebelum bisa disimpan!
-
-**Cara Edit User:**
-1. Klik tombol **Edit** pada baris user
-2. Ubah data yang diperlukan
-3. Klik **Simpan**
-
-**Cara Reset Password:**
-1. Edit user
-2. Kosongkan field password lama
-3. Masukkan password baru
-4. Klik **Simpan**
-
-### 5.4 Management Kelas
-
-**Akses:** Menu **Kelas**
-
-**Fungsi:** Mengelola data kelas
-
-**Data yang Dikelola:**
-- Nama Kelas (contoh: X - TKJ)
-- Tingkat (10, 11, 12)
-- Wali Kelas
-- Tahun Masuk
-- Status Aktif
-
-**Cara Menambah Kelas Baru:**
-1. Klik menu **Kelas**
-2. Klik tombol **Tambah Kelas**
-3. Isi form:
-   - Nama Kelas: `X - TKJ`
-   - Tingkat: `10`
-   - Wali Kelas: Pilih dari dropdown
-   - Tahun Masuk: `2024`
-4. Klik **Simpan**
-
-### 5.5 Management Siswa
-
-**Akses:** Menu **Siswa**
-
-**Fungsi:** Mengelola data siswa
-
-**Data yang Dikelola:**
-- NISN & NIS
-- Nama Lengkap
-- Kelas
-- Tanggal Lahir
-- Jenis Kelamin
-- Alamat
-- Status Aktif
-
-**Cara Menambah Siswa Baru:**
-1. Klik menu **Siswa**
-2. Klik tombol **Tambah Siswa**
-3. Isi form lengkap
-4. Klik **Simpan**
-
-**Cara Import Siswa (Bulk):**
-_(Fitur ini belum tersedia, silakan input manual satu per satu)_
-
-### 5.6 Management Mata Pelajaran
-
-**Akses:** Menu **Mapel**
-
-**Fungsi:** Mengelola master data mata pelajaran
-
-**Data yang Dikelola:**
-- Kode Mapel
-- Nama Mata Pelajaran
-- Kelompok (A, B, C)
-- Status Aktif
-
-**Cara Menambah Mapel Baru:**
-1. Klik menu **Mapel**
-2. Klik tombol **Tambah Mapel**
-3. Isi form:
-   - Kode: `B-IND`
-   - Nama: `Bahasa Indonesia`
-   - Kelompok: `A`
-4. Klik **Simpan**
-
----
-
-## 6. MODUL PENILAIAN
-
-### 6.1 Setup Mapel Kelas
-
-**Akses:** Menu **Mapel Kelas**
-
-**Fungsi:** Assign mata pelajaran ke kelas tertentu
-
-**Cara Setup:**
-1. Klik menu **Mapel Kelas**
-2. Klik tombol **Tambah Mapel Kelas**
-3. Pilih:
-   - Sekolah
-   - Semester (yang aktif)
-   - Kelas
-   - Mata Pelajaran
-   - Guru Pengampu
-4. Klik **Simpan**
-
-### 6.2 Enrollment Siswa
-
-**Fungsi:** Mendaftarkan siswa yang mengikuti mapel tertentu
-
-**Cara:**
-1. Dari daftar **Mapel Kelas**, klik **Enrollments**
-2. Klik **Enroll Semua Siswa** (jika seluruh kelas ikut)
-3. Atau tambah siswa satu per satu
-4. Klik **Simpan**
-
-### 6.3 Setup Teknik Penilaian
-
-**Akses:** Menu **Penilaian** → **Teknik Asesmen**
-
-**Fungsi:** Mendefinisikan jenis-jenis penilaian
-
-**Teknik yang Tersedia:**
-- Ulangan Harian
-- Tugas
-- Praktik
-- Projek
-- UTS/UAS
-- dll.
-
-**Cara Menambah Teknik Baru:**
-1. Klik **Teknik Asesmen**
-2. Klik **Tambah**
-3. Isi nama teknik
-4. Klik **Simpan**
-
-### 6.4 Setup Perencanaan Asesmen
-
-**Fungsi:** Merencanakan penilaian untuk mapel tertentu
-
-**Cara:**
-1. Dari **Mapel Kelas**, klik mata pelajaran
-2. Klik **Perencanaan**
-3. Tambahkan komponen penilaian:
-   - Jenis Teknik
-   - Bobot (%)
-   - Target jumlah penilaian
-4. Klik **Simpan**
-
-### 6.5 Input Penilaian (Assessment)
-
-**Metode 1: Input via Assessments Menu**
-
-1. Dari **Mapel Kelas**, klik **Assessments**
-2. Klik **Tambah Penilaian**
-3. Isi data:
-   - Judul: `Ulangan Harian Bab 1`
-   - Teknik: Pilih teknik
-   - Bobot: `20`
-   - Skor Maksimal: `100`
-   - Tanggal
-4. Klik **Simpan**
-5. Klik **Input Nilai** pada penilaian yang dibuat
-6. Masukkan nilai per siswa
-7. Klik **Simpan**
-
-**Metode 2: Input via Penilaian Board (Recommended)**
-
-1. Dari **Mapel Kelas**, klik **Penilaian**
-2. Tampilan board akan muncul dengan tabel siswa vs penilaian
-3. Klik **Tambah Penilaian** untuk membuat kolom baru
-4. Input nilai langsung di tabel
-5. Klik **Simpan Semua**
-
-### 6.6 Input Nilai Akhir & Capaian Kompetensi
-
-**Fungsi:** Memasukkan nilai akhir semester dan deskripsi capaian
-
-**Cara:**
-1. Dari **Mapel Kelas**, klik **Nilai Akhir**
-2. Bisa klik **Hitung dari Penilaian** untuk auto-calculate, atau
-3. Input manual nilai akhir per siswa
-4. **PENTING:** Isi kolom **Capaian Kompetensi (Deskripsi)** untuk setiap siswa:
-   - Contoh: "Menunjukkan penguasaan yang sangat baik dalam memahami teks narasi dan mampu menganalisis struktur teks dengan tepat."
-5. Klik **Simpan**
-
-⚠️ **WAJIB:** Deskripsi capaian kompetensi akan muncul di rapor!
-
-### 6.7 Monitoring Penilaian
-
-**Akses:** Menu **Penilaian** → **Monitor Penilaian**
-
-**Fungsi:** Melihat progress penilaian semua mapel
-
-**Informasi yang Ditampilkan:**
-- Mapel yang sudah/belum dinilai
-- Jumlah siswa
-- Progress persentase
-
----
-
-## 7. MODUL P5 (PROFIL PELAJAR PANCASILA)
-
-### 7.1 Tentang P5
-
-P5 (Projek Penguatan Profil Pelajar Pancasila) adalah pembelajaran berbasis projek yang mengembangkan 6 dimensi profil pelajar:
-
-1. **Beriman, Bertakwa Kepada Tuhan YME, dan Berakhlak Mulia**
-2. **Bernalar Kritis**
-3. **Mandiri**
-4. **Berkebinekaan Global**
-5. **Kreatif**
-6. **Bergotong Royong**
-
-### 7.2 Membuat Projek P5
-
-**Akses:** Menu **P5BK**
-
-**Cara:**
-1. Klik menu **P5BK**
-2. Klik **Tambah Projek**
-3. Isi form:
-   - Semester: Pilih semester aktif
-   - Tema: `Pengelolaan Sampah Plastik`
-   - Deskripsi: Jelaskan projek
-4. Klik **Simpan**
-
-### 7.3 Setup Kriteria Penilaian P5
-
-**Fungsi:** Mendefinisikan kriteria yang dinilai dalam projek
-
-**Cara:**
-1. Dari daftar P5 Projects, klik **Kriteria**
-2. Klik **Tambah Kriteria**
-3. Isi:
-   - No. Urut: `1`
-   - Judul Kriteria: `Menjaga Lingkungan Alam Sekitar`
-   - **Dimensi**: Pilih salah satu dari 6 dimensi
-4. Klik **Simpan**
-5. Ulangi untuk kriteria lainnya
-
-⚠️ **PENTING:** Pastikan setiap kriteria di-assign ke dimensi yang sesuai!
-
-### 7.4 Enrollment Siswa ke P5
-
-**Cara:**
-1. Dari P5 Project, klik **Anggota**
-2. Klik **Enroll All Students** untuk mendaftarkan semua siswa kelas
-3. Atau tambah siswa manual satu per satu
-4. Klik **Simpan**
-
-### 7.5 Input Penilaian P5
-
-**Cara:**
-1. Dari P5 Project, klik **Penilaian**
-2. Pilih siswa
-3. Beri nilai per kriteria dengan skala:
-   - **MB** = Mulai Berkembang
-   - **SB** = Sedang Berkembang
-   - **BSH** = Berkembang Sesuai Harapan
-   - **SAB** = Sangat Berkembang
-4. Isi **Catatan Proses** (deskripsi)
-5. Klik **Simpan**
-
-**Perhitungan Dimensi:**
-Sistem akan otomatis menghitung nilai dimensi berdasarkan nilai dominan dari kriteria-kriteria yang masuk dalam dimensi tersebut.
-
----
-
-## 8. MODUL EKSTRAKURIKULER
-
-### 8.1 Membuat Ekstrakurikuler
-
-**Akses:** Menu **Ekskul**
-
-**Cara:**
-1. Klik menu **Ekskul**
-2. Klik **Tambah Ekstrakurikuler**
-3. Isi:
-   - Nama: `Tapak Suci`
-   - Pembina: Pilih dari dropdown
-4. Klik **Simpan**
-
-### 8.2 Enrollment Anggota
-
-**Cara:**
-1. Dari daftar Ekstrakurikuler, klik **Anggota**
-2. Tambah siswa satu per satu atau
-3. Klik **Add All from Class** untuk tambah seluruh kelas
-4. Klik **Simpan**
-
-### 8.3 Input Penilaian Ekstrakurikuler
-
-**Cara:**
-1. Dari Ekstrakurikuler, klik **Penilaian**
-2. Pilih semester
-3. Input nilai per siswa:
-   - Nilai: `Sangat Baik`, `Baik`, `Cukup`, `Kurang`
-   - Deskripsi: Jelaskan pencapaian siswa
-4. Klik **Simpan**
-
----
-
-## 9. MODUL PKL
-
-### 9.1 Setup Tujuan Pembelajaran PKL
-
-**Akses:** Menu **PKL** → **Learning Objectives**
-
-**Cara:**
-1. Klik **Learning Objectives**
-2. Klik **Tambah**
-3. Isi tujuan pembelajaran PKL
-4. Klik **Simpan**
-
-### 9.2 Membuat Kelompok PKL
-
-**Akses:** Menu **PKL** → **PKL Groups**
-
-**Cara:**
-1. Klik **PKL Groups**
-2. Klik **Tambah Kelompok**
-3. Isi:
-   - Semester
-   - Nama Kelompok/Perusahaan
-   - Pembimbing
-4. Klik **Simpan**
-
-### 9.3 Enrollment Anggota PKL
-
-**Cara:**
-1. Dari PKL Group, klik **Members**
-2. Tambah siswa yang PKL di tempat tersebut
-3. Klik **Simpan**
-
-### 9.4 Input Penilaian PKL
-
-**Cara:**
-1. Dari PKL Group, klik **Penilaian**
-2. Pilih siswa dan tujuan pembelajaran
-3. Input nilai (angka)
-4. Klik **Simpan**
-
----
-
-## 10. GENERATE RAPOR
-
-### 10.1 Akses Manajemen Rapor
-
-**Akses:** Menu **Pengaturan** → **Rapor Kelas**
-
-Atau langsung ke: Menu **Aksi Kelas**
-
-### 10.2 Persiapan Sebelum Generate Rapor
-
-**Checklist:**
-- ✅ Semua nilai akhir sudah diinput
-- ✅ Capaian kompetensi sudah diisi
-- ✅ P5 sudah dinilai
-- ✅ Ekstrakurikuler sudah dinilai
-- ✅ Kehadiran sudah diinput (Sakit, Izin, Alpha)
-- ✅ Catatan wali kelas sudah diisi
-- ✅ Keputusan naik/tidak naik sudah ditetapkan
-
-### 10.3 Generate Rapor Semester
-
-**Fungsi:** Rapor semester berisi nilai mata pelajaran
-
-**Cara:**
-1. Pilih kelas
-2. Klik tombol **Semester** (biru) pada baris siswa
-3. PDF rapor semester akan ter-generate dan muncul
-4. Klik **Download** atau **Print**
-
-**Isi Rapor Semester:**
-- Halaman 1:
-  - Identitas siswa
-  - Nilai mata pelajaran + capaian kompetensi
-- Halaman 2:
-  - Ekstrakurikuler
-  - Kehadiran
-  - Catatan wali kelas
-  - Keputusan kenaikan
-  - Tanda tangan
-
-### 10.4 Generate Rapor P5BK
-
-**Fungsi:** Rapor P5 berisi penilaian projek
-
-**Cara:**
-1. Pilih kelas
-2. Klik tombol **P5BK** (merah) pada baris siswa
-3. PDF rapor P5 akan ter-generate
-4. Download/Print
-
-**Isi Rapor P5 (Per Projek = 2 Halaman):**
-- Halaman 1:
-  - Tema projek
-  - Tabel nilai 6 dimensi
-  - Legend (MB, SB, BSH, SAB)
-  - Tanda tangan wali kelas
-- Halaman 2:
-  - Tabel detail kriteria dengan checkmark
-  - Catatan proses
-  - Tanda tangan orang tua, wali kelas, kepala sekolah
-
-### 10.5 Generate Buku Induk
-
-**Fungsi:** Rekapitulasi lengkap semua semester (Kelas 10-12)
-
-**Cara:**
-1. Pilih kelas
-2. Klik tombol **Buku Induk** (kuning) pada baris siswa
-3. PDF buku induk akan ter-generate
-4. Download/Print
-
-**Isi Buku Induk:**
-- Halaman 1-6: Rapor per semester (Kelas 10 Ganjil/Genap, 11 Ganjil/Genap, 12 Ganjil/Genap)
+#### **c) Buku Induk (7 Halaman Konsisten)**
+- Halaman 1-6: Rapor per semester (Kelas 10, 11, 12 - Ganjil & Genap)
 - Halaman 7: Rekapitulasi nilai semua semester
-- Halaman 8: Status kelulusan
 
----
+### 📅 6. **Fitur Semester (Single Active Semester)**
 
-## 11. FAQ & TROUBLESHOOTING
+**Karakteristik Utama:**
+- ✅ **Singleton Pattern:** Hanya 1 semester aktif per sekolah
+- ✅ **Auto-Deactivation:** Aktivasi semester baru otomatis nonaktifkan semester lain
+- ✅ **Transaction Safety:** Menggunakan database transaction
+- ✅ **Format Semester:** `ganjil` atau `genap`
+- ✅ **Status:** `berjalan` (aktif) atau `tidak_berjalan` (non-aktif)
 
-### Q1: Lupa password, bagaimana cara reset?
+**Relasi dengan Modul:**
+- Mapel Kelas terkait semester
+- Penilaian tersimpan per semester
+- P5 Projects per semester
+- Rapor di-generate per semester
 
-**A:** Hubungi operator sekolah atau kepala sekolah untuk melakukan reset password dari menu Users.
+**Workflow:**
+```
+1. Admin buat semester baru (2024/2025 Ganjil)
+2. Set status "berjalan" → semester lain otomatis non-aktif
+3. Setup mapel kelas untuk semester aktif
+4. Guru input nilai sepanjang semester
+5. Akhir semester: generate rapor
+6. Awal semester baru: ulangi dari step 1
+```
 
----
+### 🔒 7. **Fitur Keamanan**
 
-### Q2: Kenapa menu tertentu tidak muncul?
+**Password Strength Validation:**
+- ✅ Minimal 8 karakter
+- ✅ Huruf besar (A-Z)
+- ✅ Huruf kecil (a-z)
+- ✅ Angka (0-9)
+- ✅ Simbol (!@#$%^&*)
+- ✅ Visual strength indicator (merah/kuning/hijau)
+- ✅ Disable submit button jika password lemah
 
-**A:** Setiap role memiliki akses yang berbeda. Pastikan Anda login dengan akun yang sesuai. Hanya Kepala Sekolah dan Operator yang memiliki full access.
+**Cascade Delete:**
 
----
-
-### Q3: Nilai akhir tidak muncul di rapor
-
-**A:** Pastikan:
-1. Nilai akhir sudah diinput di menu **Nilai Akhir**
-2. Capaian kompetensi sudah diisi
-3. Semester yang dipilih sudah benar
-
----
-
-### Q4: Capaian kompetensi kosong di rapor
-
-**A:** Anda harus mengisi kolom **Capaian Kompetensi (Deskripsi)** di menu **Nilai Akhir** untuk setiap mata pelajaran dan setiap siswa.
-
----
-
-### Q5: Dimensi P5 menunjukkan tanda "-"
-
-**A:** Pastikan:
-1. Setiap kriteria P5 sudah di-assign ke dimensi yang benar
-2. Penilaian P5 sudah diinput (bukan kosong)
-3. Refresh halaman atau generate ulang rapor
-
----
-
-### Q6: Rapor tidak bisa di-print
-
-**A:**
-1. Pastikan browser sudah allow pop-up
-2. Coba browser lain (Chrome recommended)
-3. Check koneksi internet
-4. Hubungi admin jika masalah berlanjut
-
----
-
-### Q7: Error 403 Forbidden saat akses menu
-
-**A:** Anda tidak memiliki akses ke menu tersebut. Hubungi kepala sekolah atau operator untuk upgrade role jika diperlukan.
-
----
-
-### Q8: Siswa tidak muncul di daftar penilaian
-
-**A:** Pastikan siswa sudah di-enroll ke mata pelajaran tersebut melalui menu **Enrollments**.
-
----
-
-### Q9: Rapor siswa tidak lengkap
-
-**A:** Checklist:
-- ✅ Semua nilai mata pelajaran sudah diinput
-- ✅ Deskripsi capaian kompetensi terisi
-- ✅ P5 sudah dinilai (jika ada projek)
-- ✅ Ekstrakurikuler sudah dinilai
-- ✅ Kehadiran terisi
-- ✅ Catatan wali kelas terisi
-
----
-
-### Q10: Cara mengganti logo sekolah di rapor
-
-**A:**
-1. Login sebagai Kepala Sekolah/Operator
-2. Klik menu **Sekolah**
-3. Klik **Edit Profil**
-4. Upload logo baru
-5. Klik **Simpan**
-
----
-
-### Q11: Password tidak bisa disimpan saat tambah user baru
-
-**A:** Pastikan password memenuhi semua kriteria:
-1. Minimal 8 karakter
-2. Ada huruf besar (A-Z)
-3. Ada huruf kecil (a-z)
-4. Ada angka (0-9)
-5. Ada simbol (!@#$%^&* dll)
-
-Perhatikan indikator kekuatan password. Jika masih merah atau kuning, password belum cukup kuat. Tombol Simpan akan ter-disable sampai password menunjukkan status **Kuat** (hijau).
-
-Contoh password yang memenuhi syarat: `Smk2025!@#`, `Guru123!`, `Admin2025#`
-
----
-
-### Q12: Error saat hapus siswa (Foreign Key Constraint)
-
-**A:** Sistem sudah dilengkapi dengan cascade delete otomatis. Saat menghapus siswa, sistem akan otomatis menghapus semua data terkait:
+Saat hapus siswa, otomatis menghapus:
 - Nilai penilaian
 - Nilai akhir
 - Enrollment mata pelajaran
 - Kehadiran
 - Catatan wali kelas
 - Kenaikan kelas
-- Data P5
-- Data ekstrakurikuler
-- Data PKL
-- Data kokurikuler
+- Data P5, Ekstrakurikuler, PKL, Kokurikuler
 
-Jika masih error, hubungi developer.
+### 📊 8. **Monitoring & Reporting**
 
----
-
-### Q13: Buku Induk tidak menampilkan 7 halaman
-
-**A:** Sistem akan otomatis generate 7 halaman untuk Buku Induk:
-- Halaman 1-2: Kelas 10 (Ganjil & Genap)
-- Halaman 3-4: Kelas 11 (Ganjil & Genap)
-- Halaman 5-6: Kelas 12 (Ganjil & Genap)
-- Halaman 7: Rekapitulasi
-
-Jika semester belum ada datanya, akan ditampilkan sebagai halaman kosong. Ini adalah behavior normal untuk menjaga konsistensi format Buku Induk.
+- **Monitor Penilaian:** Progress penilaian semua mapel
+- **Daftar Legger:** Rekapitulasi nilai per kelas
+- **Class Board:** Dashboard rapor per kelas
+- **Aksi Kelas:** Input kehadiran, catatan, kenaikan kelas
 
 ---
 
-### Q14: Menu navbar tidak sesuai dengan role saya
+## 🛠 Teknologi
 
-**A:** Sistem menggunakan 2 level akses:
-1. **Admin (Kepala Sekolah & Operator):** Akses penuh ke semua menu termasuk data master
-2. **Non-Admin (Guru, Pembina, Pembimbing):** Akses ke semua menu operasional kecuali data master
+### Backend Stack
+```
+├── Framework: Laravel 12.27.1
+├── PHP: 8.2.29
+├── Database: MySQL 8.0 / MariaDB
+└── PDF Library: SnappyPDF (wkhtmltopdf)
+```
 
-Jika Anda login sebagai Guru tapi tidak bisa akses menu tertentu, pastikan:
-- Anda sudah login dengan akun yang benar
-- Semester sudah aktif
-- Data master sudah di-setup oleh admin
+### Frontend Stack
+```
+├── CSS Framework: Tailwind CSS 3.x
+├── JavaScript: Alpine.js
+├── Template Engine: Blade
+└── Icons: Heroicons / Font Awesome
+```
 
----
-
-### Q15: Dropdown menu salah highlight (yang lain ikut biru)
-
-**A:** Issue ini sudah diperbaiki. Setiap dropdown sekarang memiliki highlight independent:
-- Dropdown **Penilaian** akan highlight biru jika Anda di menu Teknik Asesmen, Monitor Penilaian, atau Legger
-- Dropdown **PKL** akan highlight biru jika Anda di menu Kelompok PKL atau Tujuan PKL
-- Dropdown **Pengaturan** akan highlight biru jika Anda di menu Media atau Tanggal Rapor
-
-Refresh browser jika masih ada issue.
-
----
-
-## KONTAK & SUPPORT
-
-**Developer:** PT Benuanta Technology Consultant - Bayu Adi H
-
-**Links:**
-- Website : benuanta.web.id
-- LinkedIn: [https://www.linkedin.com/in/noclaire/](https://www.linkedin.com/in/noclaire/)
-- GitHub: [https://github.com/skivanoclaire](https://github.com/skivanoclaire)
+### Development Tools
+```
+├── Dependency Manager: Composer
+├── Package Manager: NPM
+├── Version Control: Git
+└── Server: Apache / Nginx
+```
 
 ---
 
-**© 2025 E-Rapor - PT Benuanta Technology Consultant**
+## 🚀 Instalasi
 
-_Manual ini akan diupdate seiring dengan perkembangan fitur aplikasi._
+### Prasyarat
+
+Pastikan sistem Anda memiliki:
+- ✅ PHP >= 8.2
+- ✅ Composer >= 2.0
+- ✅ MySQL >= 8.0 atau MariaDB >= 10.5
+- ✅ Apache/Nginx
+- ✅ Node.js & NPM (untuk compile assets)
+- ✅ wkhtmltopdf (untuk PDF generation)
+
+### Langkah Instalasi
+
+#### 1️⃣ **Clone Repository**
+```bash
+git clone https://github.com/yourusername/erapor.git
+cd erapor
+```
+
+#### 2️⃣ **Install Dependencies**
+```bash
+composer install
+npm install
+```
+
+#### 3️⃣ **Environment Configuration**
+```bash
+cp .env.example .env
+php artisan key:generate
+```
+
+#### 4️⃣ **Database Configuration**
+
+Edit file `.env`:
+```env
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=erapor
+DB_USERNAME=root
+DB_PASSWORD=your_password
+```
+
+#### 5️⃣ **Migrate Database**
+```bash
+php artisan migrate --seed
+```
+
+#### 6️⃣ **Compile Assets**
+```bash
+npm run build
+```
+
+#### 7️⃣ **Configure SnappyPDF**
+
+Edit `config/snappy.php`:
+```php
+'pdf' => [
+    'enabled' => true,
+    'binary'  => 'C:\Program Files\wkhtmltopdf\bin\wkhtmltopdf.exe', // Windows
+    // 'binary' => '/usr/local/bin/wkhtmltopdf', // Linux/Mac
+    'timeout' => false,
+],
+```
+
+#### 8️⃣ **Start Development Server**
+```bash
+php artisan serve
+```
+
+Access: `http://localhost:8000`
+
+### Default Credentials
+
+```
+Username: kepalasekolah
+Password: SMK2025!@#
+```
+
+⚠️ **PENTING:** Segera ganti password setelah login pertama!
 
 ---
 
-## CHANGELOG
+## 📁 Struktur Proyek
 
-**Version 1.1 - 22 Oktober 2025**
-- Update dokumentasi RBAC (Role-Based Access Control)
-- Penjelasan detail hak akses per role
-- Tambah dokumentasi password strength validation
-- Tambah FAQ tentang cascade delete, Buku Induk, dan dropdown highlighting
-- Update informasi kontak developer
-
-**Version 1.0 - Desember 2024**
-- Initial release
-- Dokumentasi lengkap semua modul
-- FAQ & Troubleshooting
+```
+erapor/
+├── app/
+│   ├── Http/
+│   │   ├── Controllers/           # Business logic controllers
+│   │   │   ├── SemesterController.php
+│   │   │   ├── AssessmentController.php
+│   │   │   ├── P5ProjectController.php
+│   │   │   └── ...
+│   │   └── Middleware/            # Custom middleware (RBAC)
+│   ├── Models/                    # Eloquent models
+│   │   ├── Semester.php
+│   │   ├── Student.php
+│   │   ├── FinalGrade.php
+│   │   └── ...
+│   └── ...
+├── database/
+│   ├── migrations/                # Database schema
+│   └── seeders/                   # Sample data
+├── resources/
+│   ├── views/                     # Blade templates
+│   │   ├── semesters/
+│   │   ├── rapor/
+│   │   ├── p5/
+│   │   └── ...
+│   └── js/                        # Frontend JS
+├── routes/
+│   └── web.php                    # Route definitions (RBAC)
+├── public/
+│   └── ...                        # Public assets
+├── .env.example                   # Environment template
+├── MANUAL_PENGGUNA.md            # User manual (Bahasa Indonesia)
+├── TESTING_REPORT.md             # Testing documentation
+└── README.md                      # This file
+```
 
 ---
 
-**END OF MANUAL**
+## 🗄 Database Schema (Key Tables)
+
+### Tabel Data Master
+```sql
+schools              # Profil sekolah
+semesters            # Tahun ajaran & semester (single active)
+users                # Guru & staff (RBAC)
+classrooms           # Data kelas
+students             # Data siswa
+subjects             # Mata pelajaran
+```
+
+### Tabel Penilaian
+```sql
+class_subjects       # Assignment mapel ke kelas per semester
+subject_enrollments  # Enrollment siswa ke mapel
+assessment_techniques # Jenis penilaian (ulangan, tugas, dll)
+assessments          # Data penilaian
+assessment_scores    # Nilai siswa per penilaian
+final_grades         # Nilai akhir + capaian kompetensi
+```
+
+### Tabel P5
+```sql
+p5_projects          # Projek P5 per semester
+p5_project_students  # Anggota projek
+p5_dimensions        # 6 dimensi profil pelajar
+p5_project_criteria  # Kriteria penilaian per dimensi
+p5_project_ratings   # Nilai P5 siswa (MB/SB/BSH/SAB)
+```
+
+### Tabel Ekstrakurikuler & PKL
+```sql
+extracurriculars     # Data ekstrakurikuler
+extracurricular_members
+extracurricular_assessments
+
+pkl_objectives       # Tujuan pembelajaran PKL
+pkl_groups           # Kelompok PKL
+pkl_group_members
+pkl_assessments
+```
+
+### Tabel Pelengkap
+```sql
+attendances          # Kehadiran (Sakit, Izin, Alpha)
+notes                # Catatan wali kelas
+promotions           # Kenaikan kelas
+```
+
+---
+
+## 🔑 Role & Permission Matrix
+
+| Fitur | Kepala Sekolah | Operator | Guru | Pembina | Pembimbing PKL |
+|-------|----------------|----------|------|---------|----------------|
+| **Data Master** |
+| Edit Profil Sekolah | ✅ | ✅ | ❌ | ❌ | ❌ |
+| Management Semester | ✅ | ✅ | ❌ | ❌ | ❌ |
+| Management Users | ✅ | ✅ | ❌ | ❌ | ❌ |
+| Management Kelas | ✅ | ✅ | ❌ | ❌ | ❌ |
+| Management Siswa | ✅ | ✅ | ❌ | ❌ | ❌ |
+| Management Mapel | ✅ | ✅ | ❌ | ❌ | ❌ |
+| **Operasional** |
+| View Profil Sekolah | ✅ | ✅ | ✅ | ✅ | ✅ |
+| Mapel Kelas (CRUD) | ✅ | ✅ | 👁️ View | 👁️ View | 👁️ View |
+| Penilaian (Full) | ✅ | ✅ | ✅ | ✅ | ✅ |
+| P5 Projects | ✅ | ✅ | ✅ | ✅ | ✅ |
+| Ekstrakurikuler | ✅ | ✅ | ✅ | ✅ | ✅ |
+| PKL | ✅ | ✅ | ✅ | ✅ | ✅ |
+| Aksi Kelas | ✅ | ✅ | ✅ | ✅ | ✅ |
+| Generate Rapor | ✅ | ✅ | ✅ | ✅ | ✅ |
+
+---
+
+## 📚 Dokumentasi
+
+### Manual Lengkap
+📖 **[MANUAL_PENGGUNA.md](MANUAL_PENGGUNA.md)**
+
+Berisi panduan lengkap:
+- ✅ Cara login & default credentials
+- ✅ Panduan berdasarkan role
+- ✅ Modul data master (termasuk Semester detail)
+- ✅ Modul penilaian
+- ✅ Modul P5, Ekstrakurikuler, PKL
+- ✅ Generate rapor (Semester, P5, Buku Induk)
+- ✅ FAQ & Troubleshooting (15+ Q&A)
+
+### Testing Report
+🧪 **[TESTING_REPORT.md](TESTING_REPORT.md)**
+
+Hasil testing manual untuk:
+- ✅ Authentication & RBAC
+- ✅ Semester Management
+- ✅ Password Validation
+- ✅ Cascade Delete
+- ✅ PDF Generation
+- ✅ Navbar Highlighting
+
+---
+
+## 🎯 Use Cases
+
+### Use Case 1: Setup Semester Baru
+
+```
+Actor: Kepala Sekolah / Operator
+
+Flow:
+1. Login ke sistem
+2. Klik menu "Semester"
+3. Klik "+ Tambah Semester Baru"
+4. Isi form:
+   - Tahun Ajaran: 2025/2026
+   - Semester: ganjil
+   - Status: berjalan
+5. Simpan
+6. Sistem otomatis nonaktifkan semester lama
+7. Setup mapel kelas untuk semester baru
+```
+
+### Use Case 2: Input Nilai Siswa
+
+```
+Actor: Guru Mata Pelajaran
+
+Flow:
+1. Login ke sistem
+2. Klik "Mapel Kelas"
+3. Pilih mapel yang diampu
+4. Klik "Penilaian" (board view)
+5. Klik "+ Tambah Penilaian" untuk buat kolom baru
+6. Input nilai langsung di tabel
+7. Klik "Simpan Semua"
+8. Sistem auto-calculate nilai akhir
+```
+
+### Use Case 3: Generate Rapor Semester
+
+```
+Actor: Wali Kelas / Kepala Sekolah
+
+Flow:
+1. Login ke sistem
+2. Klik "Aksi Kelas"
+3. Pilih kelas
+4. Pastikan checklist lengkap:
+   ✓ Nilai akhir terisi
+   ✓ Capaian kompetensi terisi
+   ✓ Ekstrakurikuler dinilai
+   ✓ Kehadiran terisi
+   ✓ Catatan wali kelas terisi
+5. Klik tombol "Semester" (biru) di baris siswa
+6. PDF rapor ter-generate
+7. Download / Print
+```
+
+---
+
+## ⚙️ Konfigurasi Lanjutan
+
+### Email Notifications (Optional)
+
+Edit `.env`:
+```env
+MAIL_MAILER=smtp
+MAIL_HOST=smtp.gmail.com
+MAIL_PORT=587
+MAIL_USERNAME=your_email@gmail.com
+MAIL_PASSWORD=your_app_password
+MAIL_ENCRYPTION=tls
+MAIL_FROM_ADDRESS=noreply@smkmuhammadiyah.sch.id
+MAIL_FROM_NAME="E-Rapor SMK"
+```
+
+### Queue Configuration (For Heavy Tasks)
+
+```env
+QUEUE_CONNECTION=database
+```
+
+Run queue worker:
+```bash
+php artisan queue:work
+```
+
+### Backup Strategy
+
+#### Automated Backup
+
+Install package:
+```bash
+composer require spatie/laravel-backup
+```
+
+Run backup:
+```bash
+php artisan backup:run
+```
+
+#### Manual Backup
+
+Database:
+```bash
+mysqldump -u root -p erapor > backup.sql
+```
+
+Files:
+```bash
+tar -czf erapor_backup.tar.gz /path/to/erapor
+```
+
+---
+
+## 🧪 Testing
+
+### Manual Testing
+
+Testing dilakukan untuk semua modul utama. Hasil lengkap ada di **[TESTING_REPORT.md](TESTING_REPORT.md)**.
+
+**Test Coverage:**
+- ✅ Authentication & Authorization
+- ✅ Semester CRUD & Activate
+- ✅ Password Strength Validation
+- ✅ Student Cascade Delete
+- ✅ Assessment Input & Calculate
+- ✅ P5 Rating & Dimension Calculation
+- ✅ PDF Generation (3 types)
+- ✅ Navbar Dropdown Highlighting
+
+### Running Automated Tests (Future)
+
+```bash
+php artisan test
+```
+
+---
+
+## 🐛 Known Issues & Roadmap
+
+### Known Issues
+- ⚠️ Bulk import siswa belum tersedia (input manual)
+- ⚠️ Export nilai ke Excel belum tersedia
+- ⚠️ Email notification belum diimplementasi
+
+### Roadmap v1.2
+- [ ] Bulk import siswa via Excel
+- [ ] Export nilai ke Excel
+- [ ] Email notification (rapor siap, password reset)
+- [ ] Dashboard analytics untuk kepala sekolah
+- [ ] Mobile responsive optimization
+- [ ] Automated testing suite
+
+---
+
+## 🤝 Kontribusi
+
+Proyek ini dikembangkan secara proprietary untuk SMK Muhammadiyah Plus Tanjung Selor. Untuk request fitur atau bug report, hubungi developer.
+
+---
+
+## 👨‍💻 Developer
+
+**PT Benuanta Technology Consultant - Bayu Adi H**
+
+📧 Email: [developer@benuanta.web.id](mailto:developer@benuanta.web.id)
+🔗 LinkedIn: [https://www.linkedin.com/in/noclaire/](https://www.linkedin.com/in/noclaire/)
+💻 GitHub: [https://github.com/skivanoclaire](https://github.com/skivanoclaire)
+🌐 Website: [benuanta.web.id](https://benuanta.web.id)
+
+---
+
+## 📄 Lisensi
+
+**Proprietary Software** - © 2025 PT Benuanta Technology Consultant
+
+Aplikasi ini dikembangkan khusus untuk **SMK Muhammadiyah Plus Tanjung Selor**.
+Hak cipta dan hak kekayaan intelektual dilindungi undang-undang.
+
+Penggunaan, modifikasi, dan distribusi tanpa izin tertulis dari pemilik hak cipta dilarang keras.
+
+---
+
+## 📝 Changelog
+
+### Version 1.1 - 22 Oktober 2025
+✨ **New Features:**
+- Password strength validation dengan visual indicator
+- Enhanced semester management documentation
+
+🔧 **Improvements:**
+- Update RBAC documentation
+- Cascade delete untuk students
+- Buku Induk 7 halaman konsisten
+- Fix navbar dropdown highlighting
+- Update copyright information
+
+📚 **Documentation:**
+- Comprehensive semester feature documentation
+- Enhanced user manual dengan FAQ
+- Testing report
+
+### Version 1.0 - Desember 2024
+🎉 **Initial Release**
+- Complete Kurikulum Merdeka implementation
+- P5 with 6 dimensions
+- Multi-role access control
+- PDF generation (Semester, P5, Buku Induk)
+- Assessment & grading system
+- Ekstrakurikuler & PKL management
+
+---
+
+## 💬 Support
+
+Untuk pertanyaan, bantuan, atau laporan bug:
+
+1. 📖 Baca **[MANUAL_PENGGUNA.md](MANUAL_PENGGUNA.md)** terlebih dahulu
+2. 🔍 Cek FAQ section
+3. 📧 Email: developer@benuanta.web.id
+4. 💬 WhatsApp: [Contact via LinkedIn](https://www.linkedin.com/in/noclaire/)
+
+---
+
+## 🙏 Acknowledgments
+
+Terima kasih kepada:
+- **SMK Muhammadiyah Plus Tanjung Selor** - Client & user utama
+- **Laravel Community** - Framework & support
+- **Tailwind CSS Team** - UI framework
+- **wkhtmltopdf** - PDF generation
+
+---
+
+<div align="center">
+
+**Dikembangkan dengan ❤️ untuk SMK Muhammadiyah Plus Tanjung Selor**
+
+⭐ Star this repo if you find it useful!
+
+</div>
