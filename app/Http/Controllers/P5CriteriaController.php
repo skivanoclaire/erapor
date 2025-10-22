@@ -20,6 +20,7 @@ public function store(Request $r, P5Project $p5)
     $data = $r->validate([
         'order_no'=>['nullable','integer','min:1'],   // boleh kosong
         'title'   =>['nullable','string','max:255'],
+        'dimension_id'=>['nullable','integer','min:1','max:6'],  // 1-6 untuk 6 dimensi
     ]);
     $data['p5_project_id'] = $p5->id;
     $data['order_no'] = $data['order_no'] ?? ((int)$p5->criteria()->max('order_no') + 1); // <— fallback
@@ -29,12 +30,16 @@ public function store(Request $r, P5Project $p5)
 
 public function update(Request $r, \App\Models\P5ProjectCriterion $crit)
 {
-    // Hanya simpan judul. Tidak lagi memvalidasi / mengubah order_no.
+    // Simpan judul dan dimension_id
     $data = $r->validate([
         'title' => ['nullable','string','max:255'],
+        'dimension_id' => ['nullable','integer','min:1','max:6'],  // 1-6 untuk 6 dimensi
     ]);
 
-    $crit->update(['title' => $data['title'] ?? null]);
+    $crit->update([
+        'title' => $data['title'] ?? null,
+        'dimension_id' => $data['dimension_id'] ?? null,
+    ]);
 
     return back()->with('ok','Kriteria diperbarui.');
 }

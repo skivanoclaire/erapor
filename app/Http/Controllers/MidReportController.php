@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Student;
 use App\Models\Semester;
 use App\Models\School;
-use App\Models\SchoolHead;
 use App\Models\SchoolClass;
 use App\Models\ClassSubject;
 use App\Models\Attendance;
@@ -32,10 +31,11 @@ class MidReportController extends Controller
         $reportDate = $dateRow?->mid_report_date;
 
         $wali     = $class->wali ?? User::find($class->wali_kelas_id);
-        $waliNama = $wali->nama ?? null;
+        $waliNama = trim(($wali?->gelar_depan ? $wali->gelar_depan.' ' : '').($wali->nama ?? ''));
+        if (!empty($wali?->gelar_belakang)) $waliNama .= ', '.$wali->gelar_belakang;
         $waliNip  = $wali->nip  ?? null;
 
-        $kepsek     = SchoolHead::where('school_id', $school->id)->first();
+        $kepsek     = User::where('jenis_ptk', 'kepala_sekolah')->first();
         $kepsekNama = trim(($kepsek?->gelar_depan ? $kepsek->gelar_depan.' ' : '').($kepsek->nama ?? ''));
         if (!empty($kepsek?->gelar_belakang)) $kepsekNama .= ', '.$kepsek->gelar_belakang;
         $kepsekNip  = $kepsek->nip ?? null;
@@ -61,10 +61,11 @@ class MidReportController extends Controller
         $reportDate = $dateRow?->mid_report_date;
 
         $wali     = $class->wali ?? User::find($class->wali_kelas_id);
-        $waliNama = $wali->nama ?? null;
+        $waliNama = trim(($wali?->gelar_depan ? $wali->gelar_depan.' ' : '').($wali->nama ?? ''));
+        if (!empty($wali?->gelar_belakang)) $waliNama .= ', '.$wali->gelar_belakang;
         $waliNip  = $wali->nip  ?? null;
 
-        $kepsek     = SchoolHead::where('school_id',$school->id)->first();
+        $kepsek     = User::where('jenis_ptk', 'kepala_sekolah')->first();
         $kepsekNama = trim(($kepsek?->gelar_depan ? $kepsek->gelar_depan.' ' : '').($kepsek->nama ?? ''));
         if (!empty($kepsek?->gelar_belakang)) $kepsekNama .= ', '.$kepsek->gelar_belakang;
         $kepsekNip  = $kepsek->nip ?? null;

@@ -14,6 +14,30 @@ class SemesterController extends Controller
         return view('semesters.index', compact('semesters'));
     }
 
+    public function create()
+    {
+        $schools = \App\Models\School::all();
+        return view('semesters.create', compact('schools'));
+    }
+
+    public function store(Request $request)
+    {
+        $data = $request->validate([
+            'school_id' => 'required|exists:schools,id',
+            'tahun_ajaran' => 'required|string|max:20',
+            'semester' => 'required|in:1,2',
+            'status' => 'required|in:berjalan,tidak_berjalan',
+        ]);
+
+        // Jika status berjalan, nonaktifkan semester lain di sekolah yang sama
+        if ($data['status'] === 'berjalan') {
+            Semester::where('school_id', $data['school_id'])->update(['status' => 'tidak_berjalan']);
+        }
+
+        Semester::create($data);
+        return redirect()->route('semesters.index')->with('ok', 'Semester berhasil ditambahkan.');
+    }
+
     public function edit(Semester $semester)
     {
         return view('semesters.edit', compact('semester'));

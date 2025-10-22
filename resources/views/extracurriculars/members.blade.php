@@ -50,7 +50,7 @@
         </form>
 
         {{-- Tambah semua siswa kelas terpilih --}}
-        <form method="POST" action="{{ route('extracurriculars.members.storeAll', $ex) }}" class="mb-3">
+        <form method="POST" action="{{ route('ex.members.storeAll', $ex) }}" class="mb-3">
             @csrf
             <input type="hidden" name="semester_id" value="{{ $semesterId }}">
             <input type="hidden" name="class_id" value="{{ $classId }}">
@@ -67,7 +67,7 @@
                     @forelse ($members as $m)
                         <li class="flex items-center justify-between border rounded px-3 py-2">
                             <span>{{ $m->student->nama ?? '-' }}</span>
-                            <form method="POST" action="{{ route('extracurriculars.members.destroy', [$ex, $m]) }}"
+                            <form method="POST" action="{{ route('ex.members.destroy', [$ex, $m]) }}"
                                 onsubmit="return confirm('Hapus anggota ini?')">
                                 @csrf @method('DELETE')
                                 {{-- agar kembali ke semester yg sama --}}
@@ -88,7 +88,7 @@
                     @forelse ($candidates as $s)
                         <li class="flex items-center justify-between border rounded px-3 py-2">
                             <span>{{ $s->nama }}</span>
-                            <form method="POST" action="{{ route('extracurriculars.members.store', $ex) }}">
+                            <form method="POST" action="{{ route('ex.members.store', $ex) }}">
                                 @csrf
                                 <input type="hidden" name="semester_id" value="{{ $semesterId }}">
                                 <input type="hidden" name="student_id" value="{{ $s->id }}">

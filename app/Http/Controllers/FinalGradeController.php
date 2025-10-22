@@ -37,11 +37,15 @@ class FinalGradeController extends Controller
         $data = $r->validate([
             'scores'   => ['array'],
             'scores.*' => ['nullable','numeric','min:0','max:1000'],
+            'descriptions' => ['array'],
+            'descriptions.*' => ['nullable','string','max:5000'],
         ]);
 
         DB::transaction(function () use ($data, $cs) {
             $now = now();
             foreach ($data['scores'] ?? [] as $studentId => $val) {
+                $description = $data['descriptions'][$studentId] ?? null;
+
                 if ($val === null || $val === '') {
                     // kosongkan jika dihapus
                     FinalGrade::where([
@@ -53,12 +57,16 @@ class FinalGradeController extends Controller
 
                 FinalGrade::updateOrCreate(
                     ['class_subject_id'=>$cs->id,'student_id'=>$studentId],
-                    ['final_score'=>$val,'computed_at'=>$now]
+                    [
+                        'final_score'=>$val,
+                        'description'=>$description,
+                        'computed_at'=>$now
+                    ]
                 );
             }
         });
 
-        return back()->with('ok','Nilai akhir disimpan.');
+        return back()->with('ok','Nilai akhir dan capaian kompetensi disimpan.');
     }
 
     // OPSIONAL: Hitung otomatis dari penilaian (assessments + assessment_scores)

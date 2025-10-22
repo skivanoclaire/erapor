@@ -18,8 +18,6 @@ use App\Models\{
     Attendance,
     Note,
     Promotion,
-    ReportSetting,
-    ReportWaliSignature,
     MediaUpload            // jika perlu render gambar ttd/logo
 };
 

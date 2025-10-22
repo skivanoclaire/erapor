@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(php artisan tinker --execute=\"echo json_encode(\\DB::select(''SHOW COLUMNS FROM extracurriculars''));\")",
+      "Bash(php artisan:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

@@ -68,19 +68,19 @@
 
                             {{-- Semester (preview final) --}}
                             <td class="border px-2 py-2 text-center">
-                                <a target="_blank" href="{{ route('reports.semester.show', [$s->id, $semester->id]) }}"
+                                <a target="_blank" href="{{ route('reports.semester.pdf', [$s->id, $semester->id]) }}"
                                     class="inline-block px-3 py-1 rounded bg-blue-600 text-white">Semester</a>
                             </td>
 
-                            {{-- P5BK (sementara arahkan ke modul P5 projek) --}}
+                            {{-- P5BK (Rapor Projek Penguatan Profil Pelajar Pancasila) --}}
                             <td class="border px-2 py-2 text-center">
-                                <a href="{{ route('p5-projects.index') }}"
+                                <a target="_blank" href="{{ route('rapor.p5.pdf', [$s->id, $semester->id]) }}"
                                     class="inline-block px-3 py-1 rounded bg-rose-600 text-white">P5BK</a>
                             </td>
 
-                            {{-- Buku Induk (placeholder / edit siswa) --}}
+                            {{-- Buku Induk --}}
                             <td class="border px-2 py-2 text-center">
-                                <a href="{{ route('students.edit', $s) }}"
+                                <a target="_blank" href="{{ route('rapor.buku_induk.pdf', $s->id) }}"
                                     class="inline-block px-3 py-1 rounded bg-yellow-400 text-black">Buku Induk</a>
                             </td>
                         </tr>

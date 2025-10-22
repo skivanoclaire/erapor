@@ -37,11 +37,22 @@
         {{-- Form tambah kriteria --}}
         <form method="POST" action="{{ route('p5.criteria.store', $p5) }}" class="grid sm:grid-cols-6 gap-3 mb-4">
             @csrf
-            <label class="text-sm sm:col-span-2">Urutan
+            <label class="text-sm sm:col-span-1">Urutan
                 <input type="number" min="1" name="order_no" value="{{ old('order_no', $nextOrder ?? 1) }}"
                     class="mt-1 w-full border rounded px-3 py-2">
             </label>
-            <label class="text-sm sm:col-span-4">Judul / Deskripsi singkat
+            <label class="text-sm sm:col-span-2">Dimensi Profil Pelajar
+                <select name="dimension_id" class="mt-1 w-full border rounded px-3 py-2">
+                    <option value="">-- Pilih Dimensi --</option>
+                    <option value="1" {{ old('dimension_id') == 1 ? 'selected' : '' }}>1. Beriman & Berakhlak Mulia</option>
+                    <option value="2" {{ old('dimension_id') == 2 ? 'selected' : '' }}>2. Bernalar Kritis</option>
+                    <option value="3" {{ old('dimension_id') == 3 ? 'selected' : '' }}>3. Mandiri</option>
+                    <option value="4" {{ old('dimension_id') == 4 ? 'selected' : '' }}>4. Berkebinekaan Global</option>
+                    <option value="5" {{ old('dimension_id') == 5 ? 'selected' : '' }}>5. Kreatif</option>
+                    <option value="6" {{ old('dimension_id') == 6 ? 'selected' : '' }}>6. Bergotong Royong</option>
+                </select>
+            </label>
+            <label class="text-sm sm:col-span-3">Judul / Deskripsi singkat
                 <input name="title" value="{{ old('title') }}" class="mt-1 w-full border rounded px-3 py-2">
             </label>
             <div class="sm:col-span-6">
@@ -55,6 +66,7 @@
                 <thead class="text-left text-slate-500">
                     <tr>
                         <th style="width:70px">Urut</th>
+                        <th style="width:180px">Dimensi</th>
                         <th>Judul</th>
                         <th style="width:180px" class="text-right">Aksi</th>
                     </tr>
@@ -85,11 +97,37 @@
                                 </div>
                             </td>
 
-                            {{-- KOLOM JUDUL: edit judul saja --}}
+                            {{-- KOLOM DIMENSI --}}
+                            <td class="py-2">
+                                @php
+                                    $dimensions = [
+                                        1 => 'Beriman',
+                                        2 => 'Bernalar Kritis',
+                                        3 => 'Mandiri',
+                                        4 => 'Berkebinekaan',
+                                        5 => 'Kreatif',
+                                        6 => 'Bergotong Royong'
+                                    ];
+                                @endphp
+                                <span class="text-xs px-2 py-1 rounded-full bg-slate-100">
+                                    {{ $dimensions[$r->dimension_id] ?? 'Belum diset' }}
+                                </span>
+                            </td>
+
+                            {{-- KOLOM JUDUL: edit judul dan dimensi --}}
                             <td class="py-2">
                                 <form id="f-{{ $r->id }}" method="POST"
                                     action="{{ route('p5.criteria.update', $r) }}" class="flex items-center gap-2">
                                     @csrf @method('PUT')
+                                    <select name="dimension_id" class="border rounded px-2 py-1 text-xs">
+                                        <option value="">-- Dimensi --</option>
+                                        <option value="1" {{ $r->dimension_id == 1 ? 'selected' : '' }}>1. Beriman</option>
+                                        <option value="2" {{ $r->dimension_id == 2 ? 'selected' : '' }}>2. Bernalar Kritis</option>
+                                        <option value="3" {{ $r->dimension_id == 3 ? 'selected' : '' }}>3. Mandiri</option>
+                                        <option value="4" {{ $r->dimension_id == 4 ? 'selected' : '' }}>4. Berkebinekaan</option>
+                                        <option value="5" {{ $r->dimension_id == 5 ? 'selected' : '' }}>5. Kreatif</option>
+                                        <option value="6" {{ $r->dimension_id == 6 ? 'selected' : '' }}>6. Bergotong Royong</option>
+                                    </select>
                                     <input name="title" value="{{ $r->title }}"
                                         class="flex-1 border rounded px-2 py-1">
                                     <button class="px-2 py-1 border rounded hover:bg-slate-50">Simpan</button>

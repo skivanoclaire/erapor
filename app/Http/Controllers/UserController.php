@@ -34,7 +34,15 @@ class UserController extends Controller
         $data = $r->validate([
             'school_id' => ['required','exists:schools,id'],
             'username'  => ['required','string','max:100','unique:users,username'],
-            'password'  => ['nullable','string','min:5'],
+            'password'  => [
+                'required',
+                'string',
+                'min:8',
+                'regex:/[a-z]/',      // huruf kecil
+                'regex:/[A-Z]/',      // huruf besar
+                'regex:/[0-9]/',      // angka
+                'regex:/[@$!%*#?&]/', // simbol
+            ],
             'nama'      => ['required','string','max:150'],
             'jenis_ptk' => ['required', Rule::in(['guru','guru_mapel','kepala_sekolah','operator','pembina','pembimbing_pkl'])],
             'ptk_aktif' => ['nullable','boolean'],
@@ -42,9 +50,13 @@ class UserController extends Controller
             'nik' => ['nullable','string','max:20'],
             'gelar_depan' => ['nullable','string','max:50'],
             'gelar_belakang' => ['nullable','string','max:50'],
+        ], [
+            'password.required' => 'Password wajib diisi.',
+            'password.min' => 'Password minimal 8 karakter.',
+            'password.regex' => 'Password harus mengandung huruf besar, huruf kecil, angka, dan simbol (@$!%*#?&).',
         ]);
         $data['ptk_aktif'] = $r->boolean('ptk_aktif');
-        $data['password']  = Hash::make($data['password'] ?? 'password');
+        $data['password']  = Hash::make($data['password']);
 
         User::create($data);
         return redirect()->route('users.index')->with('ok','User dibuat.');

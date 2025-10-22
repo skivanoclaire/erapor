@@ -47,7 +47,7 @@
                         </td>
                         <td class="py-2 text-right">
                             {{-- Link anggota sesuai web.php --}}
-                            <a href="{{ route('extracurriculars.members', $r) }}"
+                            <a href="{{ route('ex.members', $r) }}"
                                 class="px-2 py-1 border rounded">Anggota</a>
 
                             {{-- Link nilai opsional (tampil bila route tersedia) --}}

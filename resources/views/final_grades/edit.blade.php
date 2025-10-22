@@ -49,24 +49,37 @@
                         <tr>
                             <th class="w-10">No</th>
                             <th>Nama Siswa</th>
-                            <th class="w-40 text-right">Nilai Akhir</th>
+                            <th class="w-32">Nilai Akhir</th>
+                            <th>Capaian Kompetensi (Deskripsi)</th>
                         </tr>
                     </thead>
                     <tbody>
                         @forelse($students as $i=>$s)
-                            @php $val = optional($existing->get($s->id))->final_score; @endphp
+                            @php
+                                $existing_grade = $existing->get($s->id);
+                                $val = optional($existing_grade)->final_score;
+                                $desc = optional($existing_grade)->description;
+                            @endphp
                             <tr class="border-t">
                                 <td class="py-2">{{ $i + 1 }}</td>
                                 <td class="py-2">{{ $s->nama }}</td>
                                 <td class="py-2">
                                     <input type="number" step="0.01" min="0" max="1000"
                                         name="scores[{{ $s->id }}]" value="{{ old('scores.' . $s->id, $val) }}"
-                                        class="w-32 border rounded px-2 py-1 text-right">
+                                        class="w-28 border rounded px-2 py-1 text-right">
+                                </td>
+                                <td class="py-2">
+                                    <textarea
+                                        name="descriptions[{{ $s->id }}]"
+                                        rows="2"
+                                        class="w-full border rounded px-2 py-1 text-sm"
+                                        placeholder="Contoh: Menunjukkan penguasaan yang sangat baik dalam..."
+                                    >{{ old('descriptions.' . $s->id, $desc) }}</textarea>
                                 </td>
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="3" class="py-6 text-center text-slate-500">Belum ada siswa.</td>
+                                <td colspan="4" class="py-6 text-center text-slate-500">Belum ada siswa.</td>
                             </tr>
                         @endforelse
                     </tbody>

@@ -318,18 +318,44 @@
     <table class="no-border mt16 small">
         <tr>
             <td class="w33 center">
-                Mengetahui<br>Orang Tua/Wali,<br><br><br>
-                ........................
+                Mengetahui<br>Orang Tua/Wali,<br><br><br><br><br>
+                @php
+                    $namaOrtu = $student->nama_wali ?: ($student->nama_ayah ?: '........................');
+                    $namaOrtu = $namaOrtu !== '........................' ? ucwords(strtolower($namaOrtu)) : $namaOrtu;
+                @endphp
+                <strong>{{ $namaOrtu }}</strong>
             </td>
             <td class="w33 center">
                 {{ $kota ? $kota . ', ' : '' }}{{ $tgl }}<br>
-                Wali Kelas,<br><br><br><br>
-                <b>{{ $waliNama ?? '................................' }}</b><br>
+                Wali Kelas,<br><br><br><br><br>
+                @php
+                    // Format nama: jika ada gelar, pisahkan dan format hanya nama
+                    $namaWali = $waliNama ?? 'Rofik Angtiangsih, S.Pd.I';
+                    if (preg_match('/(.*?),\s*(.*)/', $namaWali, $matches)) {
+                        // Ada gelar setelah koma
+                        $namaWali = ucwords(strtolower($matches[1])) . ', ' . $matches[2];
+                    } else {
+                        // Tidak ada gelar atau gelar di depan
+                        $namaWali = ucwords(strtolower($namaWali));
+                    }
+                @endphp
+                <strong>{{ $namaWali }}</strong><br>
                 NIP. {{ $waliNip ?? '-' }}
             </td>
             <td class="w33 center">
-                Mengetahui<br>Kepala Sekolah<br><br><br><br>
-                <b>{{ $kepsekNama ?? '................................' }}</b><br>
+                Mengetahui<br>Kepala Sekolah<br><br><br><br><br>
+                @php
+                    // Format nama: jika ada gelar, pisahkan dan format hanya nama
+                    $namaKepsek = $kepsekNama ?? 'Nurhayati Ambo';
+                    if (preg_match('/(.*?),\s*(.*)/', $namaKepsek, $matches)) {
+                        // Ada gelar setelah koma
+                        $namaKepsek = ucwords(strtolower($matches[1])) . ', ' . $matches[2];
+                    } else {
+                        // Tidak ada gelar atau gelar di depan
+                        $namaKepsek = ucwords(strtolower($namaKepsek));
+                    }
+                @endphp
+                <strong>{{ $namaKepsek }}</strong><br>
                 NIP. {{ $kepsekNip ?? '-' }}
             </td>
         </tr>

@@ -2,7 +2,20 @@
 @section('title', 'Semester')
 @section('content')
     <div class="bg-white rounded-lg shadow p-4">
-        <h2 class="font-semibold mb-4">Daftar Semester</h2>
+        <div class="flex justify-between items-center mb-4">
+            <h2 class="font-semibold">Daftar Semester</h2>
+            <a href="{{ route('semesters.create') }}"
+               class="px-4 py-2 rounded bg-blue-600 text-white hover:bg-blue-700">
+                + Tambah Semester Baru
+            </a>
+        </div>
+
+        @if(session('ok'))
+            <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
+                {{ session('ok') }}
+            </div>
+        @endif
+
         <div class="overflow-x-auto">
             <table class="min-w-full text-sm">
                 <thead class="text-left text-slate-500">
